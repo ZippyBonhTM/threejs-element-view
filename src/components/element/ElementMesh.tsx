@@ -1,15 +1,39 @@
 'use client';
 
-// import { useAnimations, useGLTF } from "@react-three/drei";
-import { useGLTF } from "@react-three/drei";
+import { ElementType } from "@/types/Element";
+import { useGLTF, useAnimations } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { useMotionValue, useSpring } from "framer-motion";
+import { useRef } from "react";
+import { AnimationAction, AnimationClip, Group, MathUtils } from "three";
+import ElectronShellRenderer from "./ElectronShellRenderer";
 
 
-export default function ElementMesh() {
-  const { scene } = useGLTF("/assets/block.glb");
-  // const { actions } = useAnimations(animations, scene);
+export default function ElementMesh({ element }: { element: ElementType; }) {
+  const motionVal = useMotionValue(0);
+  const spring = useSpring(motionVal, { damping: 1, stiffness: 20 });
+  const { scene, animations } = useGLTF("/block.glb");
+  const { actions } = useAnimations<AnimationClip>(animations, scene);
+  const group = useRef<Group>(null);
+
+  useFrame(() => {
+    group.current?.rotateY(MathUtils.degToRad(0.2));
+
+    Object.keys(actions).forEach((key) => {
+      const action = actions[key] as AnimationAction;
+      action.play().paused = true;
+      action.time = spring.get();
+    });
+  });
   return (
-    <group>
-      <primitive object={scene}/>
+    <group
+      onPointerDown={() => motionVal.set(1)}
+      onPointerUp={() => motionVal.set(0)}
+      ref={group}
+    >
+      <ElectronShellRenderer
+        electronConfig={element.electronConfiguration.value}
+      />
     </group>
   );
 }

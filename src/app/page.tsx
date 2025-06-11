@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import dynamic from "next/dynamic";
 
@@ -9,7 +9,7 @@ const ElementScene = dynamic(() => import("@/components/element/ElementScene"), 
 
 export default function Home() {
   return (
-    <main className="h-full">
+    <main>
       <ElementScene />
     </main>
   );
