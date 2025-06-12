@@ -1,18 +1,21 @@
+'use client'
+
 import { useRef } from 'react';
 import { Sphere, Torus } from '@react-three/drei';
 import { Mesh } from 'three';
 import convertElectronConfig from "@/utils/convertElectronConfig"; // Adjust path to your function's file
+import useElementContext from '@/hooks/useElementContext';
 
-interface ElectronShellProps {
-  electronConfig: string;
-}
-
-function ElectronShellRenderer({ electronConfig }: ElectronShellProps) {
+function ElectronShellRenderer() {
   // Type electronRefs as an array of Mesh objects
   const electronRefs = useRef<Mesh[]>([]);
 
+  const context = useElementContext();
+  if (!context?.element || !context?.setElement) return
+
   // Use the imported convertElectronConfig function
-  const shells = convertElectronConfig(electronConfig);
+  console.log(context)
+  const shells = convertElectronConfig(context.element.electronConfiguration.value);
 
   return (
     <>
