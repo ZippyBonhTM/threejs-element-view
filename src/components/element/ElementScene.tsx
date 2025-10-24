@@ -7,7 +7,7 @@ import ElementMesh from "./ElementMesh";
 
 export default function Scene() {
   return (
-    <Canvas gl={{ antialias: true }} dpr={[1, 1.5]} camera={{ position: [0, 5, 0], fov: 75 }} style={{ height: '100vh', width: '100vw' }}>
+    <Canvas gl={{ antialias: true }} dpr={[1, 1.5]} camera={{ position: [6, 4, 0], fov: 75 }} style={{ height: '100vh', width: '100vw' }}>
       <directionalLight position={[1, 1, 3]} intensity={2} />
       <Suspense fallback={null}>
         <Center>

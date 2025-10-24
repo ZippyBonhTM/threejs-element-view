@@ -8,6 +8,6 @@ interface ElementContextProps {
   setElement: React.Dispatch<React.SetStateAction<ElementType | null>>
 }
 
-const ElementContext = createContext<ElementContextProps | undefined>(undefined);
+const ElementContext = createContext<ElementContextProps | null>(null);
 
 export default ElementContext;

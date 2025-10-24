@@ -37,12 +37,13 @@ class ElementClient {
     const response = await fetchClient(`${ElementClient}?name=${name}`, {
       method: "GET"
     });
-    return response;
+    return response[0];
   }
 
   static async getElementBySymbol(symbol: string) {
     const response = await fetchClient(`${ELEMENT_BASE_URL}?symbol=${symbol}`);
-    return response;
+    console.log(response);
+    return response[0];
   }
 };
 
